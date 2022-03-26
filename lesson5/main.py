@@ -6,7 +6,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import pymongo
-import pprint
+from pprint import pprint
 
 from MVideoLoader import MVideoLoader
 
