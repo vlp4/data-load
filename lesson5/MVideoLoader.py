@@ -31,14 +31,21 @@ class MVideoLoader:
         cards = driver.find_elements(By.CSS_SELECTOR, 'mvid-shelf-group mvid-product-cards-group '
                                                       '.product-mini-card__image a')
 
+        divs = driver.find_elements(By.CSS_SELECTOR, 'mvid-shelf-group mvid-product-cards-group > div')
+
         # Extract goods data
         goods = []
-        for card in cards:
-            title = card.find_element(By.CSS_SELECTOR, 'img').get_attribute('alt')
-            link = card.get_attribute('href')
-            good = {
-                'title': title,
-                'link': link,
-            }
-            goods.append(good)
+        for i in range(len(divs)):
+            div = divs[i]
+            clazz = div.get_attribute('class')
+            if clazz.find('product-mini-card__image') >= 0:
+                title = div.find_element(By.CSS_SELECTOR, 'img').get_attribute('alt')
+                link = div.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
+                price_wrapper = divs[i + 4].find_element(By.CSS_SELECTOR, '.price__wrapper')
+                good = {
+                    'title': title,
+                    'link': link,
+                    'price': int(price_wrapper.text.replace(' ', '')),
+                }
+                goods.append(good)
         return goods

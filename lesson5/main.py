@@ -6,6 +6,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import pymongo
+import pprint
 
 from MVideoLoader import MVideoLoader
 
@@ -16,7 +17,7 @@ driver = webdriver.Chrome(executable_path='./chromedriver', options=options)
 goods = MVideoLoader().load_goods(driver)
 driver.quit()
 
-print(goods)
+pprint(goods)
 
 client = pymongo.MongoClient('127.0.0.1', 27017)
 db = client['geek-course']
