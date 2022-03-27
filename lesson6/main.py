@@ -9,7 +9,8 @@
 # * Рейтинг книги
 # 3) Собранная информация должна складываться в базу данных
 
-from scrapy.crawler import CrawlerProcess
+from twisted.internet import reactor
+from scrapy.crawler import CrawlerRunner
 from scrapy.settings import Settings
 
 from spiders.labirint import LabirintSpider
@@ -21,11 +22,9 @@ if __name__ == '__main__':
     my_settings = Settings()
     my_settings.setmodule(settings)
 
-    process = CrawlerProcess(settings=my_settings)
-    process.crawl(LabirintSpider)
-    process.start()
-
-    process = CrawlerProcess(settings=my_settings)
-    process.crawl(Book24Spider)
-    process.start()
-
+    runner = CrawlerRunner(my_settings)
+    runner.crawl(LabirintSpider)
+    runner.crawl(Book24Spider)
+    d = runner.join()
+    d.addBoth(lambda _: reactor.stop())
+    reactor.run()
