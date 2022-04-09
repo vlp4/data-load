@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     process = CrawlerProcess(settings=crawler_settings)
     process.crawl(HhVacancySpider, search_params_string="?schedule=remote")
-    # process.start()
+    process.start()
 
     print('Vacancy count:', my_vacancies.count_documents({}))
     print('Employer count:', my_employers.count_documents({}))
