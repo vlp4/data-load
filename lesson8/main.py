@@ -9,7 +9,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.settings import Settings
 
 import settings
-from lesson8.my_mongo import my_vacancies
+from lesson8.my_mongo import my_vacancies, my_employers
 from spiders.hh_vacancies import HhVacancySpider
 
 
@@ -19,8 +19,8 @@ if __name__ == '__main__':
 
     process = CrawlerProcess(settings=crawler_settings)
     process.crawl(HhVacancySpider, search_params_string="?schedule=remote")
-    process.start()
+    # process.start()
 
-    count = my_vacancies.count_documents({})
-    print('Vacancy count:', count)
+    print('Vacancy count:', my_vacancies.count_documents({}))
+    print('Employer count:', my_employers.count_documents({}))
 
